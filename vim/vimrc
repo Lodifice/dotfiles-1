@@ -1,0 +1,194 @@
+" Folding {{{
+
+augroup filetypeVim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldlevel=0
+augroup END
+
+" }}}
+
+" Vundle {{{
+
+    " Be iMproved, required
+    set nocompatible
+    " Required
+    filetype off
+
+    " Set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+    " Let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+
+    " Plugin 'scrooloose/nerdtree'
+    " Plugin 'jiangmiao/auto-pairs'
+    " TODO: Needs to find header files
+    " Plugin 'scrooloose/syntastic'
+    " BUG: Causes "file not found" spell checking problems
+    " Plugin 'lervag/vimtex'
+
+    " Required
+    call vundle#end()
+    " Required
+    filetype plugin indent on
+
+" }}}
+
+" Syntastic {{{
+
+    let g:syntastic_c_include_dirs = ['include', 'inc']
+
+" }}}
+
+" Completion {{{
+
+" Enable omni completion for plugin
+" filetype plugin on
+" set omnifunc=syntaxcomplete#Complete
+
+" longest: auto-select longest common match of results
+" menuone: always display menu
+set completeopt=longest,menuone
+
+" pumvisible() checks whether or not the completion menu is displayed
+" < needs to be escaped by a backslash
+" Enables ENTER (carriage return) accepting of suggestions
+" FIXME: Doesn't work yet
+noremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" }}}
+
+" General {{{
+
+" Show line numbers
+set number
+" Break lines at word (requires Wrap lines)
+set linebreak
+" Wrap-broken line prefix
+set showbreak=+++
+" Line wrap (number of cols)
+set textwidth=900
+" Highlight matching brace
+set showmatch
+" Use visual bell (no beeping)
+set visualbell
+
+" Highlight all search results
+set hlsearch
+" Enable smart-case search
+set smartcase
+" Always case-insensitive
+set ignorecase
+" Searches for strings incrementally
+set incsearch
+
+" Auto-indent new lines
+set autoindent
+" Use spaces instead of tabs
+set expandtab
+" Number of auto-indent spaces
+set shiftwidth=4
+" Number of spaces per tab
+set tabstop=4
+" Enable smart-indent
+set smartindent
+" Enable smart-tabs
+set smarttab
+" Number of spaces per Tab
+set softtabstop=4
+" New sp window will appear below
+set splitbelow
+" New vsp window will appear on the right
+set splitright
+
+" Yank to CTRL+V and MMB clipboard
+set clipboard=unnamedplus
+
+" Show row and column ruler information
+set ruler
+set relativenumber
+" Enable syntax highlighting
+syntax on
+
+" Number of undo levels
+set undolevels=1000
+" Backspace behaviour
+set backspace=indent,eol,start
+
+" }}}
+
+" Highlighting & colours {{{
+
+" Highlight all trailing spaces and spaced before tabs
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
+" Highlight all tabs
+autocmd ColorScheme * highlight ExtraAllTabs ctermbg=cyan
+" Highlight long lines (>80 chars)
+" autocmd ColorScheme * highlight OverLength ctermbg=darkgrey guibg=darkgrey
+
+augroup vimrcAutocmds
+    autocmd!
+    autocmd InsertLeave * match ExtraWhitespace '\s\+$'
+    autocmd InsertLeave * 2match ExtraAllTabs '\t'
+    " autocmd InsertLeave * 3match OverLength '\%>80v.\+'
+augroup END
+
+" Highlight 80th character of each line
+set colorcolumn=80
+highlight ColorColumn ctermbg=darkgray
+
+" Highlighting of spellchecker
+highlight SpellBad ctermbg=darkyellow ctermfg=black
+
+
+" Default color scheme
+colorscheme default
+
+" }}}
+
+" Vimdiff {{{
+
+if &diff
+    " Syntax hightlighting is just distracting in vimdiff
+    syntax off
+    " Disable colour column
+    highlight ColorColumn ctermbg=none
+endif
+
+" Changed line
+highlight DiffChange ctermfg=white ctermbg=blue
+" Changed section of line
+highlight DiffText ctermfg=white ctermbg=yellow
+" Added line
+highlight DiffAdd ctermfg=lightgreen ctermbg=green
+" Deleted line
+highlight DiffDelete ctermfg=lightred ctermbg=red
+
+" }}}
+
+" Keyboard settings {{{
+
+" Disable arrow keys for normal mode
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" Disable arrow keys in insert mode
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+" Remap window movement
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Idea: map keys to simulate arrow keys
+" inoremap <expr> <CR> pumvisible() ? '\<C-y>' : '\<G-g>'
+
+" }}}
