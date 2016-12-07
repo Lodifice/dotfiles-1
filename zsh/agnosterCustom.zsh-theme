@@ -1,3 +1,7 @@
+# Copyright (c) 2009-2016 Robby Russell and contributors
+# See the full list at https://github.com/robbyrussell/oh-my-zsh/contributors
+
+
 # vim:ft=zsh ts=2 sw=2 sts=2
 #
 # agnoster's Theme - https://gist.github.com/3712874
