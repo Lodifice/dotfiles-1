@@ -179,7 +179,9 @@ bindsym $mod+F6 exec --no-startup-id echo "Ö" | xclip -selection clipboard
 bindsym $mod+F7 exec --no-startup-id echo "Ü" | xclip -selection clipboard
 
 # Lock screen
-bindsym $mod+Shift+Escape exec ~/scripts/lockscreen.sh
+bindsym $mod+Shift+Escape exec ~/scripts/lockscreen
+# Suspend computer
+bindsym $mod+control+Escape exec ~/scripts/lockscreen && systemctl suspend
 
 # Background image
 exec --no-startup-id feh --bg-scale /home/user/Pictures/milkyWay.jpg
