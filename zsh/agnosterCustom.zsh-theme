@@ -1,0 +1,1 @@
+/home/user/.oh-my-zsh/themes/agnosterCustom.zsh-theme
