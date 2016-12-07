@@ -1,0 +1,22 @@
+[core]
+    editor = vim
+[user]
+    email = ...
+    name = Christian Lewe
+[alias]
+    hist = log --pretty=format:'%C(bold yellow) %h %C(reset) %ad | %s %C(bold green)%d%C(reset) [%an]' --graph --date=short
+    co = checkout
+    st = status
+    br = branch
+    pr = diff --staged
+    dt = difftool
+    mt = mergetool
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[pull]
+    rebase = true
