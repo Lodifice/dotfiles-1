@@ -93,7 +93,7 @@ prompt_git() {
   }
 
   has_unpushed() {
-    test -n "$(git diff origin/$(get_branch))"
+    test -n "$(git diff origin/$(get_branch)..HEAD)"
   }
   has_stashed() {
     test -n "$(git stash list)"
