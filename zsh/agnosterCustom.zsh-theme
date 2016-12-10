@@ -88,49 +88,38 @@ prompt_git() {
   local color=green
   local str=""
 
-  get_branch() {
-    git rev-parse --abbrev-ref HEAD
-  }
-
-  has_unpushed() {
-    test -n "$(git diff origin/$(get_branch)..HEAD)"
-  }
-  has_stashed() {
-    test -n "$(git stash list)"
-  }
-  has_untracked() {
-    test -n "$(git status --porcelain --ignore-submodules | grep "?? ")"
-  }
-  is_dirty() {
-    test -n "$(git status --porcelain --ignore-submodules | grep -v "?? ")"
-  }
-
   ref="$vcs_info_msg_0_"
   if [[ -n "$ref" ]]; then
-    if has_unpushed; then
-      if has_stashed || has_untracked || is_dirty; then
-        str="${str} ⬆"
-      else
-        str="${str} ⬆ "
+    curr_branch=$(git rev-parse --abbrev-ref HEAD)
+    unpushed=$(git diff origin/${curr_branch}..HEAD)
+    stashed=$(git stash list)
+    untracked=$(git status --porcelain --ignore-submodules | grep '?? ')
+    dirty=$(git status --porcelain --ignore-submodules | grep -v '?? ')
+
+    if [ ! -z $unpushed ]; then
+      str="${str} ⬆"
+    fi
+
+    if [ -z $stashed ] && [ -z $untracked ] && [ -z $dirty ]; then
+      str="${str} "
+    else
+      if [ ! -z $stashed ]; then
+        str="${str} #"
       fi
-    fi
 
-    if has_stashed; then
-      str="${str} #"
-    fi
-
-    if has_untracked; then
-      str="${str} ?"
-      if [[ "$color" == "green" ]]; then
-        GIT_FG=white
-        color=red
+      if [ ! -z $untracked ]; then
+        str="${str} ?"
+        if [[ "$color" == "green" ]]; then
+          GIT_FG=white
+          color=red
+        fi
       fi
-    fi
 
-    if is_dirty; then
-      str="${str} $PLUSMINUS"
-      if [[ "$color" == "green" ]]; then
-        color=yellow
+      if [ ! -z $dirty ]; then
+        str="${str} $PLUSMINUS"
+        if [[ "$color" == "green" ]]; then
+          color=yellow
+        fi
       fi
     fi
 
