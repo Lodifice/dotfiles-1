@@ -1,174 +1,75 @@
-" Folding {{{
+"     __  __       _                _                                  _
+"    |  \/  | __ _| | _____  __   _(_)_ __ ___     __ _ _ __ ___  __ _| |_
+"    | |\/| |/ _` | |/ / _ \ \ \ / / | '_ ` _ \   / _` | '__/ _ \/ _` | __|
+"    | |  | | (_| |   <  __/  \ V /| | | | | | | | (_| | | |  __/ (_| | |_
+"    |_|  |_|\__,_|_|\_\___|   \_/ |_|_| |_| |_|  \__, |_|  \___|\__,_|\__|
+"                                                 |___/
+"                                           _       _
+"                          __ _  __ _  __ _(_)_ __ | |
+"                         / _` |/ _` |/ _` | | '_ \| |
+"                        | (_| | (_| | (_| | | | | |_|
+"                         \__,_|\__, |\__,_|_|_| |_(_)
+"                               |___/
 
-augroup filetypeVim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-    autocmd FileType vim setlocal foldlevel=0
-augroup END
+" Plugins (Vundle) {{{1
 
-" }}}
+" Required
+set nocompatible
+filetype off
 
-" Vundle {{{
+" Set the runtime path to include Vundle and initialise
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-    " Be iMproved, required
-    set nocompatible
-    " Required
-    filetype off
+" Let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-    " Set the runtime path to include Vundle and initialize
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
+Plugin 'michalbachowski/vim-wombat256mod'
+Plugin 'vim-scripts/simple-pairs'
+Plugin 'guns/xterm-color-table.vim'
 
-    " Let Vundle manage Vundle, required
-    Plugin 'VundleVim/Vundle.vim'
+" Syntastic {{{2
 
-    " Plugin 'scrooloose/nerdtree'
-    " Plugin 'jiangmiao/auto-pairs'
-    " TODO: Needs to find header files
-    " Plugin 'scrooloose/syntastic'
-    " BUG: Causes "file not found" spell checking problems
-    " Plugin 'lervag/vimtex'
+"   let g:syntastic_c_include_dirs = ['include', 'inc']
 
-    " Required
-    call vundle#end()
-    " Required
-    filetype plugin indent on
+" }}}2
 
-" }}}
+" Required
+call vundle#end()
+filetype plugin indent on
 
-" Syntastic {{{
+" }}}1
 
-    let g:syntastic_c_include_dirs = ['include', 'inc']
 
-" }}}
+" General configuration {{{1
 
-" Completion {{{
+" Backup {{{2
 
-" Enable omni completion for plugin
-" filetype plugin on
-" set omnifunc=syntaxcomplete#Complete
+" Disable backup functions because vim doesn't crash often
+set nobackup
+set nowritebackup
+set noswapfile
 
-" longest: auto-select longest common match of results
-" menuone: always display menu
-set completeopt=longest,menuone
+" }}}2
 
-" pumvisible() checks whether or not the completion menu is displayed
-" < needs to be escaped by a backslash
-" Enables ENTER (carriage return) accepting of suggestions
-" FIXME: Doesn't work yet
-noremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Tabs and spaces {{{2
 
-" }}}
-
-" General {{{
-
-" Show line numbers
-set number
-" Break lines at word (requires Wrap lines)
-set linebreak
-" Wrap-broken line prefix
-set showbreak=+++
-" Line wrap (number of cols)
-set textwidth=900
-" Highlight matching brace
-set showmatch
-" Use visual bell (no beeping)
-set visualbell
-
-" Highlight all search results
-set hlsearch
-" Enable smart-case search
-set smartcase
-" Always case-insensitive
-set ignorecase
-" Searches for strings incrementally
-set incsearch
-
-" Auto-indent new lines
-set autoindent
-" Use spaces instead of tabs
+" Auto-convert tabs into spaces
 set expandtab
-" Number of auto-indent spaces
-set shiftwidth=4
-" Number of spaces per tab
+" Number of columns per (hard) tab
 set tabstop=4
-" Enable smart-indent
-set smartindent
-" Enable smart-tabs
-set smarttab
-" Number of spaces per Tab
+" Number of columns per soft tab
 set softtabstop=4
-" New sp window will appear below
-set splitbelow
-" New vsp window will appear on the right
-set splitright
+" Number of columns per tab level
+set shiftwidth=4
+" Stop tabs at multiples of shiftwidth
+set shiftround
+" Copy indent of last line to new lines
+set autoindent
 
-" Yank to CTRL+V and MMB clipboard
-set clipboard=unnamedplus
+" }}}2
 
-" Show row and column ruler information
-set ruler
-set relativenumber
-" Enable syntax highlighting
-syntax on
-
-" Number of undo levels
-set undolevels=1000
-" Backspace behaviour
-set backspace=indent,eol,start
-
-" }}}
-
-" Highlighting & colours {{{
-
-" Highlight all trailing spaces and spaced before tabs
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
-" Highlight all tabs
-autocmd ColorScheme * highlight ExtraAllTabs ctermbg=cyan
-" Highlight long lines (>80 chars)
-" autocmd ColorScheme * highlight OverLength ctermbg=darkgrey guibg=darkgrey
-
-augroup vimrcAutocmds
-    autocmd!
-    autocmd InsertLeave * match ExtraWhitespace '\s\+$'
-    autocmd InsertLeave * 2match ExtraAllTabs '\t'
-    " autocmd InsertLeave * 3match OverLength '\%>80v.\+'
-augroup END
-
-" Highlight 80th character of each line
-set colorcolumn=80
-highlight ColorColumn ctermbg=darkgray
-
-" Highlighting of spellchecker
-highlight SpellBad ctermbg=darkyellow ctermfg=black
-
-
-" Default color scheme
-colorscheme default
-
-" }}}
-
-" Vimdiff {{{
-
-if &diff
-    " Syntax hightlighting is just distracting in vimdiff
-    syntax off
-    " Disable colour column
-    highlight ColorColumn ctermbg=none
-endif
-
-" Changed line
-highlight DiffChange ctermfg=white ctermbg=blue
-" Changed section of line
-highlight DiffText ctermfg=white ctermbg=yellow
-" Added line
-highlight DiffAdd ctermfg=lightgreen ctermbg=green
-" Deleted line
-highlight DiffDelete ctermfg=lightred ctermbg=red
-
-" }}}
-
-" Keyboard settings {{{
+" Keyboard settings {{{2
 
 " Disable arrow keys for normal mode
 noremap <Up> <nop>
@@ -188,7 +89,153 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Idea: map keys to simulate arrow keys
-" inoremap <expr> <CR> pumvisible() ? '\<C-y>' : '\<G-g>'
+" }}}2
 
-" }}}
+" Search {{{2
+
+" Highlight all search results
+set hlsearch
+" Always case-insensitive
+set ignorecase
+" Disables ignorecase when search string contains upper case letters
+set smartcase
+" Searches for strings incrementally
+set incsearch
+
+" }}}2
+
+" History and undo {{{2
+
+" Number of undo levels
+set undolevels=1000
+" Length of command history
+set history=1000
+
+" }}}2
+
+" Splits {{{2
+
+" Horizontal splits (sp) will appear below
+set splitbelow
+" Vertical splits (vsp) will appear on the right
+set splitright
+
+" }}}2
+
+" Miscellaneous {{{2
+
+" Use visual bell (no beeping)
+set visualbell
+" Backspace behaviour
+set backspace=indent,eol,start
+" Yank to CTRL+V and MMB clipboard (X11 support required)
+set clipboard=unnamedplus
+
+" }}}2
+
+" }}}1
+
+
+" Visuals {{{1
+
+" Show line numbers
+set number
+" Use relative instead of absolute line numbers
+set relativenumber
+" Show line and column on bottom right
+set ruler
+
+" Highlighting (above colour scheme) {{{2
+
+" The following MUST stand above the colour scheme section because ColorScheme
+" is triggered by the colorscheme command.
+
+" Enable syntax highlighting
+syntax on
+
+" Highlight 80th character of each line
+set colorcolumn=80
+
+" Highlighting for search pattern matches
+highlight Search ctermbg=11 ctermfg=black
+" Triggered pattern highlighting needs to be removed
+nohl
+
+" Highlighting for trailing spaces and spaced before tabs
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
+" Highlighting for tabs
+autocmd ColorScheme * highlight ExtraAllTabs ctermbg=33
+" Highlighting for the spellchecker
+autocmd ColorScheme * highlight SpellBad ctermbg=172 ctermfg=black
+" Highlighting for the colour column
+autocmd ColorScheme * highlight ColorColumn ctermbg=darkgray
+
+augroup vimrcAutocmds
+    autocmd!
+    " Bind trailing spaces to ExtraWhitespace highlighting
+    autocmd InsertLeave * match ExtraWhitespace '\s\+$'
+    " Bing tabs to ExtraAllTabs highlighting
+    autocmd InsertLeave * 2match ExtraAllTabs '\t'
+augroup END
+
+" }}}2
+
+" Colour scheme {{{2
+
+" Enable 256 colors
+set t_Co=256
+" Default color scheme
+colorscheme wombat256mod
+
+" }}}2
+
+" }}}1
+
+
+" Folding {{{1
+
+augroup filetypeVim
+    autocmd!
+    " Enables folding via markers
+    autocmd FileType vim setlocal foldmethod=marker
+    " Auto-folds all sections
+    autocmd FileType vim setlocal foldlevel=0
+augroup END
+
+" }}}1
+
+
+" Completion {{{1
+
+" longest: auto-select longest common match of results
+" menuone: always display menu
+set completeopt=longest,menuone
+
+" pumvisible() checks whether or not the completion menu is displayed
+" < needs to be escaped by a backslash
+" Enables ENTER (carriage return) accepting of suggestions
+" FIXME: Doesn't work yet
+" noremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" }}}1
+
+
+" Vimdiff {{{1
+
+if &diff
+    " Syntax highlighting is just distracting in vimdiff
+    syntax off
+    " Disable colour column
+    highlight ColorColumn ctermbg=none
+
+    " Changed line
+    highlight DiffChange ctermfg=white ctermbg=blue
+    " Changed section of line
+    highlight DiffText ctermfg=white ctermbg=yellow
+    " Added line
+    highlight DiffAdd ctermfg=lightgreen ctermbg=green
+    " Deleted line
+    highlight DiffDelete ctermfg=lightred ctermbg=red
+endif
+
+" }}}1
