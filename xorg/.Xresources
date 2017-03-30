@@ -1,0 +1,15 @@
+xterm*termName:     xterm-256color
+xterm*Background:   black
+xterm*Foreground:   white
+xterm*cursorColor:  white
+xterm*VT100.Translations: #override \n \
+        Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n \
+        Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n
+
+Xft.dpi: 96
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialis: 1
+Xft.rgba: rgb
