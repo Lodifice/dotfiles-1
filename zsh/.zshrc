@@ -25,19 +25,19 @@ alias lle='le -hlF'
 alias lae='le -a'
 
 alias grep='grep --color=auto'
+alias evince='evince 2> /dev/null'
 
 # Required so aliases work for sudo
 alias sudo='sudo '
 
 # Interactive mode: promt before overwrites
-alias cp='cp -i'
-alias mv='mv -i'
+alias cp='cp -iv'
+alias mv='mv -iv'
 # Make rm safer
-alias rm='rm -I --preserve-root'
+alias rm='rm -I -v --preserve-root'
 
 alias pac-upgrade='pacman -Syu'
 alias pac-autorm='pacman -Rns $(pacman -Qtdq)'
-
 
 ## History ##
 HISTSIZE=10000
@@ -54,6 +54,10 @@ setopt hist_ignore_space
 setopt hist_expire_dups_first
 # Don't record duplicate entries
 setopt hist_ignore_dups
+
+
+## Autocorrection ##
+setopt correct
 
 
 ## Misc ##
@@ -74,7 +78,7 @@ promptinit
 prompt lean
 
 
-## Autocorrection ##
+## Autocompletion ##
 compinit
 # Required for 'menuselect' keymap
 zmodload zsh/complist
@@ -86,10 +90,6 @@ zstyle ':completion:*' menu select
 LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32'
 export LS_COLORS
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# COLOR1=02
-# COLOR2=01
-# zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==${COLOR1}=${COLOR2}}:${(s.:.)LS_COLORS}")'
 
 # Directories will be listed first
 zstyle ':completion:*' list-dirs-first true
