@@ -39,6 +39,7 @@ alias rm='rm -I -v --preserve-root'
 alias pac-upgrade='pacman -Syu'
 alias pac-autorm='pacman -Rns $(pacman -Qtdq)'
 
+
 ## History ##
 HISTSIZE=10000
 SAVEHIST=$HISTSIZE
@@ -94,8 +95,10 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # Directories will be listed first
 zstyle ':completion:*' list-dirs-first true
 # Group matches into groups
-zstyle ':completion:*:matches' group yes
 zstyle ':completion:*' group-name ''
+# Enable case-insensitive matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 # Shift+Tab will go backwards in the list
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 # Allow completion from within words
