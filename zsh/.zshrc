@@ -2,8 +2,8 @@ export CLICOLOR=TRUE
 export COLORTERM=TRUE
 # Configure less
 export LESS='-g -i -M -R -S -w -z-4'
-# Enable 256 colors for vim
-# [[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
+# Prevents weird SSH problems
+export TERM=xterm-256color
 
 # Enable HOME and END keys
 bindkey '^[[H' beginning-of-line
